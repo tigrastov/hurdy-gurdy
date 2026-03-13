@@ -15,10 +15,10 @@ const Afisha = () => {
           id: doc.id,
           ...doc.data()
         }));
-        
-        // Сортируем по дате (ближайшие сначала)
+
+
         eventsData.sort((a, b) => a.date.localeCompare(b.date));
-        
+
         setEvents(eventsData);
       } catch (error) {
         console.error('Ошибка загрузки афиши:', error);
@@ -56,14 +56,16 @@ const Afisha = () => {
       <h1 className="text-3xl font-bold text-amber-900 mb-8">
         Афиша мероприятий
       </h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
         {events.map(event => (
-          <EventCard key={event.id} event={event} />
+          <div key={event.id} className="w-full max-w-sm"> 
+            <EventCard key={event.id} event={event} />
+          </div>
         ))}
       </div>
     </div>
   );
-};
+}; 
 
 export default Afisha;
