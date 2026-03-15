@@ -8,7 +8,13 @@ import Contacts from './pages/Contacts';
 import Kitchen from './pages/Kitchen';
 import PhotoEvents from './pages/PhotoEvents'; 
 import Login from './pages/Login';
-import Admin from './pages/Admin';
+
+// Импорты для админки
+import AdminLayout from './pages/Admin/AdminLayout';
+import Dashboard from './pages/Admin/Dashboard';
+import EventsManager from './pages/Admin/EventsManager';
+import GalleryManager from './pages/Admin/GalleryManager';
+import AdminIndex from './pages/Admin/index';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -22,6 +28,7 @@ function App() {
             <main className="container mx-auto px-4 py-8">
               <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-6">
                 <Routes>
+                  {/* Публичные маршруты */}
                   <Route path="/" element={<Home />} />
                   <Route path="/afisha" element={<Afisha />} />
                   <Route path="/about" element={<About />} />
@@ -29,14 +36,18 @@ function App() {
                   <Route path="/kitchen" element={<Kitchen />} />
                   <Route path="/photo-events" element={<PhotoEvents />} />
                   <Route path="/login" element={<Login />} />
-                  <Route 
-                    path="/admin" 
-                    element={
-                      <ProtectedRoute>
-                        <Admin />
-                      </ProtectedRoute>
-                    } 
-                  />
+                  
+                  {/* Защищенные маршруты админки */}
+                  <Route path="/admin" element={
+                    <ProtectedRoute>
+                      <AdminLayout />
+                    </ProtectedRoute>
+                  }>
+                    <Route index element={<AdminIndex />} />
+                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="events" element={<EventsManager />} />
+                    <Route path="gallery" element={<GalleryManager />} />
+                  </Route>
                 </Routes>
               </div>
             </main>
