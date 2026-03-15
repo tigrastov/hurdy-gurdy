@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Afisha from './pages/Afisha';
 import Contacts from './pages/Contacts';
+import Kitchen from './pages/Kitchen';
+import PhotoEvents from './pages/PhotoEvents'; 
 import Login from './pages/Login';
 import Admin from './pages/Admin';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -24,6 +26,8 @@ function App() {
                   <Route path="/afisha" element={<Afisha />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/contacts" element={<Contacts />} />
+                  <Route path="/kitchen" element={<Kitchen />} />
+                  <Route path="/photo-events" element={<PhotoEvents />} />
                   <Route path="/login" element={<Login />} />
                   <Route 
                     path="/admin" 

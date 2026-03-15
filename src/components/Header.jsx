@@ -49,6 +49,21 @@ const Header = () => {
                   О нас
                 </NavLink>
               </li>
+
+              <li>
+                <NavLink to="/kitchen" className={getDesktopNavClass}>
+                  Кухня
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/photo-events" className={getDesktopNavClass}>
+                  Галерея
+                </NavLink>
+              </li>
+
+              
+
               <li>
                 <NavLink to="/afisha" className={getDesktopNavClass}>
                   Афиша
@@ -140,6 +155,28 @@ const Header = () => {
                 О нас
               </NavLink>
             </li>
+            
+
+            <li>
+              <NavLink
+                to="/kitchen"
+                className={getMobileNavClass}
+                onClick={closeMenu}
+              >
+                Кухня
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/photo-events"
+                className={getMobileNavClass}
+                onClick={closeMenu}
+              >
+                Галерея
+              </NavLink>
+            </li>
+
             <li>
               <NavLink
                 to="/afisha"
