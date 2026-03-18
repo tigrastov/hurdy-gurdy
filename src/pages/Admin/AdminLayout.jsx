@@ -16,6 +16,7 @@ const AdminLayout = () => {
     { path: '/admin', label: 'Дашборд', icon: '📊' },
     { path: '/admin/events', label: 'Афиши', icon: '📅' },
     { path: '/admin/gallery', label: 'Галерея', icon: '🖼️' },
+    { path: '/admin/kitchen', label: 'Кухня', icon: '🍳' }, 
   ];
 
   return (

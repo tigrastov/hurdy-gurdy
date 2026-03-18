@@ -6,6 +6,7 @@ import About from './pages/About';
 import Afisha from './pages/Afisha';
 import Contacts from './pages/Contacts';
 import Kitchen from './pages/Kitchen';
+import KitchenManager from './pages/Admin/KitchenManager';
 import PhotoEvents from './pages/PhotoEvents'; 
 import Login from './pages/Login';
 
@@ -47,6 +48,7 @@ function App() {
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="events" element={<EventsManager />} />
                     <Route path="gallery" element={<GalleryManager />} />
+                    <Route path="kitchen" element={<KitchenManager />} /> 
                   </Route>
                 </Routes>
               </div>
