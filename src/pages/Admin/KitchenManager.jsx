@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { db } from '../../firebase'; 
-
 
 const KitchenManager = () => {
   const [photos, setPhotos] = useState([]);
@@ -11,14 +9,16 @@ const KitchenManager = () => {
     sort_order: 0
   });
 
-  // Загружаем фото с нашего API
+  //const API_URL = 'http://91.142.75.116:8080/api';
+  const API_URL = 'https://v3078514.hosted-by-vdsina.ru/api';
+
   useEffect(() => {
     fetchPhotos();
   }, []);
 
   const fetchPhotos = async () => {
     try {
-      const res = await fetch('https://v3072312.hosted-by-vdsina.ru/api/kitchen.php');
+      const res = await fetch(`${API_URL}/kitchen.php`);
       const data = await res.json();
       setPhotos(data);
     } catch (error) {
@@ -36,7 +36,7 @@ const KitchenManager = () => {
     }
 
     try {
-      const res = await fetch('https://v3072312.hosted-by-vdsina.ru/api/kitchen/add.php', {
+      const res = await fetch(`${API_URL}/kitchen/add.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -44,10 +44,13 @@ const KitchenManager = () => {
       
       if (res.ok) {
         setForm({ image_url: '', title: '', sort_order: 0 });
-        fetchPhotos(); // перезагружаем список
+        fetchPhotos();
+      } else {
+        alert('Ошибка при добавлении');
       }
     } catch (error) {
       console.error('Ошибка добавления:', error);
+      alert('Ошибка при добавлении');
     }
   };
 
@@ -55,14 +58,18 @@ const KitchenManager = () => {
     if (!window.confirm('Удалить фото?')) return;
     
     try {
-      await fetch('https://v3072312.hosted-by-vdsina.ru/api/kitchen/delete.php', {
+      const res = await fetch(`${API_URL}/kitchen/delete.php`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id })
       });
-      fetchPhotos();
+      
+      if (res.ok) {
+        fetchPhotos();
+      }
     } catch (error) {
       console.error('Ошибка удаления:', error);
+      alert('Ошибка при удалении');
     }
   };
 
@@ -76,7 +83,6 @@ const KitchenManager = () => {
     <div>
       <h1 className="text-3xl font-bold text-amber-900 mb-6">Управление кухней</h1>
       
-      {/* Форма добавления */}
       <div className="bg-white p-4 rounded-lg shadow mb-6">
         <h2 className="text-xl font-semibold mb-4">Добавить фото</h2>
         <form onSubmit={handleAdd} className="space-y-4">
@@ -114,14 +120,13 @@ const KitchenManager = () => {
           </div>
           <button
             type="submit"
-            className="bg-amber-800 text-white px-4 py-2 rounded"
+            className="bg-amber-800 text-white px-4 py-2 rounded hover:bg-amber-900"
           >
             Добавить
           </button>
         </form>
       </div>
 
-      {/* Список фото */}
       <div className="bg-white p-4 rounded-lg shadow">
         <h2 className="text-xl font-semibold mb-4">Все фото ({photos.length})</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -136,7 +141,7 @@ const KitchenManager = () => {
                 <p className="text-sm truncate">{photo.title}</p>
                 <button
                   onClick={() => handleDelete(photo.id)}
-                  className="mt-2 w-full bg-red-500 text-white text-sm py-1 rounded"
+                  className="mt-2 w-full bg-red-500 text-white text-sm py-1 rounded hover:bg-red-600"
                 >
                   Удалить
                 </button>
