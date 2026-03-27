@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, addDoc, deleteDoc, doc, onSnapshot, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { eventsAPI } from '../../api/api';
 import EventForm from './components/EventForm';
 import EventList from './components/EventList';
 
@@ -9,30 +8,22 @@ const EventsManager = () => {
   const [isCleaning, setIsCleaning] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'events'), (snapshot) => {
-      const eventsData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      
-      eventsData.sort((a, b) => {
-        if (a.date < b.date) return -1;
-        if (a.date > b.date) return 1;
-        if (a.time && b.time) return a.time.localeCompare(b.time);
-        return 0;
-      });
-      
-      setEvents(eventsData);
-    });
-    return () => unsubscribe();
+    fetchEvents();
   }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const data = await eventsAPI.getAll();
+      setEvents(data);
+    } catch (error) {
+      console.error('Ошибка загрузки:', error);
+    }
+  };
 
   const handleAddEvent = async (formData) => {
     try {
-      await addDoc(collection(db, 'events'), {
-        ...formData,
-        createdAt: new Date().toISOString()
-      });
+      await eventsAPI.add(formData);
+      await fetchEvents();
       return true;
     } catch (error) {
       console.error('Ошибка:', error);
@@ -41,16 +32,16 @@ const EventsManager = () => {
   };
 
   const handleDeleteEvent = async (id) => {
-    if (window.confirm('Удалить мероприятие?')) {
-      try {
-        await deleteDoc(doc(db, 'events', id));
-        return true;
-      } catch (error) {
-        console.error('Ошибка:', error);
-        return false;
-      }
+    if (!window.confirm('Удалить мероприятие?')) return false;
+    
+    try {
+      await eventsAPI.delete(id);
+      await fetchEvents();
+      return true;
+    } catch (error) {
+      console.error('Ошибка:', error);
+      return false;
     }
-    return false;
   };
 
   const handleCleanup = async () => {
@@ -58,18 +49,9 @@ const EventsManager = () => {
     
     setIsCleaning(true);
     try {
-      const today = new Date().toISOString().split('T')[0];
-      const q = query(collection(db, 'events'), where('date', '<', today));
-      const querySnapshot = await getDocs(q);
-      
-      if (querySnapshot.empty) {
-        alert('Нет прошедших мероприятий для удаления');
-        return;
-      }
-      
-      const deletePromises = querySnapshot.docs.map(doc => deleteDoc(doc.ref));
-      await Promise.all(deletePromises);
-      alert(`Удалено ${querySnapshot.size} прошедших мероприятий`);
+      const result = await eventsAPI.cleanup();
+      alert(`Удалено ${result.deleted} прошедших мероприятий`);
+      await fetchEvents();
     } catch (error) {
       console.error('Ошибка при очистке:', error);
       alert('Ошибка при очистке');

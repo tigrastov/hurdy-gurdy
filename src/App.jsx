@@ -12,7 +12,6 @@ import Login from './pages/Login';
 
 // Импорты для админки
 import AdminLayout from './pages/Admin/AdminLayout';
-import Dashboard from './pages/Admin/Dashboard';
 import EventsManager from './pages/Admin/EventsManager';
 import GalleryManager from './pages/Admin/GalleryManager';
 import AdminIndex from './pages/Admin/index';
@@ -45,7 +44,6 @@ function App() {
                     </ProtectedRoute>
                   }>
                     <Route index element={<AdminIndex />} />
-                    <Route path="dashboard" element={<Dashboard />} />
                     <Route path="events" element={<EventsManager />} />
                     <Route path="gallery" element={<GalleryManager />} />
                     <Route path="kitchen" element={<KitchenManager />} /> 

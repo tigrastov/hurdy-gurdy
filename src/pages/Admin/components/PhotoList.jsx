@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 
 const PhotoList = ({ photos, onDelete }) => {
@@ -13,7 +14,6 @@ const PhotoList = ({ photos, onDelete }) => {
 
   return (
     <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
-      {/* Модальное окно предпросмотра */}
       {previewPhoto && (
         <div 
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
@@ -41,11 +41,11 @@ const PhotoList = ({ photos, onDelete }) => {
         {photos.map(photo => (
           <div key={photo.id} className="relative group">
             <div 
-              onClick={() => setPreviewPhoto(photo.imageUrl)}
+              onClick={() => setPreviewPhoto(photo.image_url)}
               className="aspect-square overflow-hidden rounded-lg cursor-pointer bg-gray-100"
             >
               <img 
-                src={photo.imageUrl} 
+                src={photo.image_url} 
                 alt=""
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
@@ -57,7 +57,7 @@ const PhotoList = ({ photos, onDelete }) => {
               ×
             </button>
             <div className="text-xs text-gray-500 mt-1">
-              {new Date(photo.date || photo.createdAt).toLocaleDateString('ru-RU')}
+              {new Date(photo.date || photo.created_at).toLocaleDateString('ru-RU')}
             </div>
           </div>
         ))}

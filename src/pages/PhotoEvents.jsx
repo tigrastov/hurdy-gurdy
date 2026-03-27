@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
+import { galleryAPI } from '../api/api';
 
 const PhotoEvents = () => {
   const [photos, setPhotos] = useState([]);
@@ -10,20 +9,16 @@ const PhotoEvents = () => {
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'gallery'));
-        const photosData = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+        const data = await galleryAPI.getAll();
         
         // Сортируем по дате (новые сверху)
-        photosData.sort((a, b) => {
-          const dateA = a.date || a.createdAt;
-          const dateB = b.date || b.createdAt;
+        data.sort((a, b) => {
+          const dateA = a.date || a.created_at;
+          const dateB = b.date || b.created_at;
           return dateB.localeCompare(dateA);
         });
         
-        setPhotos(photosData);
+        setPhotos(data);
       } catch (error) {
         console.error('Ошибка загрузки фотографий:', error);
       } finally {
@@ -86,11 +81,11 @@ const PhotoEvents = () => {
         {photos.map(photo => (
           <div 
             key={photo.id}
-            onClick={() => setSelectedPhoto(photo.imageUrl)}
+            onClick={() => setSelectedPhoto(photo.image_url)}
             className="aspect-square overflow-hidden rounded-lg cursor-pointer hover:opacity-90 transition bg-gray-100"
           >
             <img 
-              src={photo.imageUrl} 
+              src={photo.image_url} 
               alt=""
               className="w-full h-full object-cover"
               loading="lazy"

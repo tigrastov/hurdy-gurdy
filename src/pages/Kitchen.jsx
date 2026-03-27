@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react';
+import { kitchenAPI } from '../api/api';
 
 const Kitchen = () => {
     const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('https://v3078514.hosted-by-vdsina.ru/api/kitchen.php')
-            .then(res => res.json())
-            .then(data => {
+        const fetchPhotos = async () => {
+            try {
+                const data = await kitchenAPI.getAll();
                 setPhotos(data);
+            } catch (error) {
+                console.log('Ошибка:', error);
+            } finally {
                 setLoading(false);
-            })
-            .catch(err => {
-                console.log('Ошибка:', err);
-                setLoading(false);
-            });
+            }
+        };
+
+        fetchPhotos();
     }, []);
 
     if (loading) {

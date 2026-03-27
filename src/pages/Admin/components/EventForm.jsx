@@ -6,14 +6,14 @@ const EventForm = ({ onSubmit }) => {
     date: '',
     time: '',
     description: '',
-    ticketUrl: '',
-    imageUrl: '',
+    ticket_url: '',
+    image_url: '',
     venue: ''
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.title || !form.date || !form.time || !form.ticketUrl || !form.imageUrl) {
+    if (!form.title || !form.date || !form.time || !form.ticket_url || !form.image_url) {
       alert('Пожалуйста, заполните все обязательные поля');
       return;
     }
@@ -25,8 +25,8 @@ const EventForm = ({ onSubmit }) => {
         date: '',
         time: '',
         description: '',
-        ticketUrl: '',
-        imageUrl: '',
+        ticket_url: '',
+        image_url: '',
         venue: ''
       });
     }
@@ -40,7 +40,6 @@ const EventForm = ({ onSubmit }) => {
     <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-6">
       <h2 className="text-lg sm:text-xl font-semibold mb-4">Добавить мероприятие</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Поля формы (такие же, как в Admin.jsx) */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Название *
@@ -116,8 +115,8 @@ const EventForm = ({ onSubmit }) => {
           </label>
           <input
             type="url"
-            name="ticketUrl"
-            value={form.ticketUrl}
+            name="ticket_url"
+            value={form.ticket_url}
             onChange={handleChange}
             className="w-full p-2 border rounded"
             required
@@ -130,8 +129,8 @@ const EventForm = ({ onSubmit }) => {
           </label>
           <input
             type="url"
-            name="imageUrl"
-            value={form.imageUrl}
+            name="image_url"
+            value={form.image_url}
             onChange={handleChange}
             className="w-full p-2 border rounded"
             required

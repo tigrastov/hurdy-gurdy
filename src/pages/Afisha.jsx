@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
+import { eventsAPI } from '../api/api';
 import EventCard from '../components/EventCard';
 
 const Afisha = () => {
@@ -10,16 +9,9 @@ const Afisha = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'events'));
-        const eventsData = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-
-
-        eventsData.sort((a, b) => a.date.localeCompare(b.date));
-
-        setEvents(eventsData);
+        const data = await eventsAPI.getAll();
+        data.sort((a, b) => a.date.localeCompare(b.date));
+        setEvents(data);
       } catch (error) {
         console.error('Ошибка загрузки афиши:', error);
       } finally {
@@ -60,12 +52,12 @@ const Afisha = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
         {events.map(event => (
           <div key={event.id} className="w-full max-w-sm"> 
-            <EventCard key={event.id} event={event} />
+            <EventCard event={event} />
           </div>
         ))}
       </div>
     </div>
   );
-}; 
+};
 
 export default Afisha;

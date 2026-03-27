@@ -1,15 +1,16 @@
 const EventCard = ({ event }) => {
   // Форматируем дату из YYYY-MM-DD в DD.MM.YYYY
   const formatDate = (dateString) => {
+    if (!dateString) return '';
     const [year, month, day] = dateString.split('-');
     return `${day}.${month}.${year}`;
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      {event.imageUrl && (
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
+      {event.image_url && (
         <img 
-          src={event.imageUrl} 
+          src={event.image_url} 
           alt={event.title}
           className="w-full h-48 object-cover"
           onError={(e) => {
@@ -18,12 +19,12 @@ const EventCard = ({ event }) => {
         />
       )}
       
-      <div className="p-4">
+      <div className="p-4 flex flex-col flex-grow">
         <h3 className="text-xl font-semibold text-amber-900 mb-2">
           {event.title}
         </h3>
         
-        <div className="space-y-2 text-gray-600 mb-4">
+        <div className="space-y-2 text-gray-600 mb-4 flex-grow">
           <p className="flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -49,10 +50,10 @@ const EventCard = ({ event }) => {
         </div>
         
         <a
-          href={event.ticketUrl}
+          href={event.ticket_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full text-center bg-amber-800 text-white py-2 rounded hover:bg-amber-900 transition-colors"
+          className="block w-full text-center bg-amber-800 text-white py-2 rounded hover:bg-amber-900 transition-colors mt-auto"
         >
           Купить билеты
         </a>

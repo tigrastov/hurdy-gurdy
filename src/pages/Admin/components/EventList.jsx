@@ -16,10 +16,10 @@ const EventList = ({ events, onDelete }) => {
         {events.map(event => (
           <div key={event.id} className="border rounded-lg overflow-hidden">
             <div className="flex flex-col sm:flex-row">
-              {event.imageUrl && (
+              {event.image_url && (
                 <div className="w-full sm:w-32 h-40 sm:h-24 flex-shrink-0">
                   <img 
-                    src={event.imageUrl} 
+                    src={event.image_url} 
                     alt={event.title}
                     className="w-full h-full object-cover"
                   />

@@ -1,20 +1,19 @@
 import { useState } from 'react';
 
 const PhotoForm = ({ onSubmit }) => {
-  const [imageUrl, setImageUrl] = useState('');
+  const [image_url, setImageUrl] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!imageUrl) {
+    if (!image_url) {
       alert('Введите ссылку на фото');
       return;
     }
 
-    const success = await onSubmit({ imageUrl, date });
+    const success = await onSubmit({ image_url, date });
     if (success) {
       setImageUrl('');
-      // Дата сбрасывается на сегодня
       setDate(new Date().toISOString().split('T')[0]);
     }
   };
@@ -29,7 +28,7 @@ const PhotoForm = ({ onSubmit }) => {
           </label>
           <input
             type="url"
-            value={imageUrl}
+            value={image_url}
             onChange={(e) => setImageUrl(e.target.value)}
             className="w-full p-2 border rounded"
             placeholder="https://i.postimg.cc/..."

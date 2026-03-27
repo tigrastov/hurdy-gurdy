@@ -13,8 +13,8 @@ const Admin = () => {
     date: '',
     time: '',
     description: '',
-    ticketUrl: '',
-    imageUrl: '',
+    ticket_url: '',
+    image_url: '',
     venue: ''
   });
 
@@ -61,8 +61,8 @@ const Admin = () => {
         date: '',
         time: '',
         description: '',
-        ticketUrl: '',
-        imageUrl: '',
+        ticket_url: '',
+        image_url: '',
         venue: ''
       });
     } catch (error) {
@@ -237,8 +237,8 @@ const Admin = () => {
             </label>
             <input
               type="url"
-              name="imageUrl"
-              value={form.imageUrl}
+              name="image_url"
+              value={form.image_url}
               onChange={handleChange}
               className="w-full p-2 border rounded text-sm sm:text-base"
               required
@@ -270,10 +270,10 @@ const Admin = () => {
                 <div className="flex flex-col sm:flex-row">
                   
                   {/* Картинка - на мобильных сверху, на десктопе слева */}
-                  {event.imageUrl && (
+                  {event.image_url && (
                     <div className="w-full sm:w-32 h-40 sm:h-24 flex-shrink-0">
                       <img 
-                        src={event.imageUrl} 
+                        src={event.image_url} 
                         alt={event.title}
                         className="w-full h-full object-cover"
                       />
