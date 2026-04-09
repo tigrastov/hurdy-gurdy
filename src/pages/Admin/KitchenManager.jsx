@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { kitchenAPI } from '../../api/api';
+import { kitchenAPI, kitchenAdminAPI } from '../../api/api';
 
 const KitchenManager = () => {
   const [photos, setPhotos] = useState([]);
@@ -33,7 +33,7 @@ const KitchenManager = () => {
     }
 
     try {
-      await kitchenAPI.add(form);
+      await kitchenAdminAPI.add(form);
       setForm({ image_url: '', title: '', sort_order: 0 });
       fetchPhotos();
     } catch (error) {
@@ -46,7 +46,7 @@ const KitchenManager = () => {
     if (!window.confirm('Удалить фото?')) return;
     
     try {
-      await kitchenAPI.delete(id);
+      await kitchenAdminAPI.delete(id);
       fetchPhotos();
     } catch (error) {
       console.error('Ошибка удаления:', error);

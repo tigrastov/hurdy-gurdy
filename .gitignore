@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Секреты и окружение
+.env
+.env.local
+.env.*.local
+
+# Firebase
+.firebase/
+
+# Vite
+.vite/

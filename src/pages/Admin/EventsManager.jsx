@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { eventsAPI } from '../../api/api';
+import { eventsAPI , eventsAdminAPI} from '../../api/api';
 import EventForm from './components/EventForm';
 import EventList from './components/EventList';
 
@@ -22,7 +22,7 @@ const EventsManager = () => {
 
   const handleAddEvent = async (formData) => {
     try {
-      await eventsAPI.add(formData);
+      await eventsAdminAPI.add(formData);
       await fetchEvents();
       return true;
     } catch (error) {
@@ -35,7 +35,7 @@ const EventsManager = () => {
     if (!window.confirm('Удалить мероприятие?')) return false;
     
     try {
-      await eventsAPI.delete(id);
+      await eventsAdminAPI.delete(id);
       await fetchEvents();
       return true;
     } catch (error) {
@@ -49,7 +49,7 @@ const EventsManager = () => {
     
     setIsCleaning(true);
     try {
-      const result = await eventsAPI.cleanup();
+      const result = await eventsAdminAPI.cleanup();
       alert(`Удалено ${result.deleted} прошедших мероприятий`);
       await fetchEvents();
     } catch (error) {

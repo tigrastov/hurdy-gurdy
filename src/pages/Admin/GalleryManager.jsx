@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { galleryAPI } from '../../api/api';
+import { galleryAPI, galleryAdminAPI } from '../../api/api';
 
 const GalleryManager = () => {
   const [photos, setPhotos] = useState([]);
@@ -33,7 +33,7 @@ const GalleryManager = () => {
     }
 
     try {
-      await galleryAPI.add(form);
+      await galleryAdminAPI.add(form);
       setForm({ image_url: '', caption: '', sort_order: 0 });
       fetchPhotos();
     } catch (error) {
@@ -46,7 +46,7 @@ const GalleryManager = () => {
     if (!window.confirm('Удалить фото?')) return;
     
     try {
-      await galleryAPI.delete(id);
+      await galleryAdminAPI.delete(id);
       fetchPhotos();
     } catch (error) {
       console.error('Ошибка удаления:', error);

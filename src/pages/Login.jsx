@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -8,6 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,10 +16,14 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/admin'); // после успешного входа перекидываем в админку
-    } catch (error) {
-      setError('Неверный email или пароль');
+      const data = await login(email, password);
+      if (data.token) {
+        navigate('/admin');
+      } else {
+        setError(data.error || 'Ошибка входа');
+      }
+    } catch (err) {
+      setError('Ошибка соединения');
     } finally {
       setLoading(false);
     }
@@ -47,7 +51,7 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
               required
             />
           </div>
@@ -60,7 +64,7 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500"
               required
             />
           </div>
@@ -68,9 +72,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full bg-amber-800 text-white py-3 rounded-lg font-semibold
-              ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-amber-900'}
-              transition-colors`}
+            className="w-full bg-amber-800 text-white py-3 rounded-lg font-semibold hover:bg-amber-900 disabled:opacity-50"
           >
             {loading ? 'Вход...' : 'Войти'}
           </button>

@@ -9,21 +9,21 @@ const EventCard = ({ event }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
       {event.image_url && (
-        <img 
-          src={event.image_url} 
+        <img
+          src={event.image_url}
           alt={event.title}
           className="w-full h-48 object-cover"
           onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/400x200?text=Нет+фото';
+            e.target.style.display = 'none';
           }}
         />
       )}
-      
+
       <div className="p-4 flex flex-col flex-grow">
         <h3 className="text-xl font-semibold text-amber-900 mb-2">
           {event.title}
         </h3>
-        
+
         <div className="space-y-2 text-gray-600 mb-4 flex-grow">
           <p className="flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,7 +31,7 @@ const EventCard = ({ event }) => {
             </svg>
             {formatDate(event.date)} в {event.time}
           </p>
-          
+
           {event.venue && (
             <p className="flex items-center gap-2">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,14 +41,14 @@ const EventCard = ({ event }) => {
               {event.venue}
             </p>
           )}
-          
+
           {event.description && (
             <p className="text-sm text-gray-500 mt-2">
               {event.description}
             </p>
           )}
         </div>
-        
+
         <a
           href={event.ticket_url}
           target="_blank"

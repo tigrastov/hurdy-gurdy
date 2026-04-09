@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase';
 import { useNavigate, NavLink, Outlet } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const AdminLayout = () => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { logout } = useAuth();
 
-  const handleLogout = async () => {
-    await signOut(auth);
+  const handleLogout = () => {
+    logout();
     navigate('/');
   };
 
@@ -41,7 +41,7 @@ const AdminLayout = () => {
         </div>
       </header>
 
-      {/* Боковое меню (десктоп - всегда видно, мобильное - выезжает) */}
+      {/* Боковое меню */}
       <aside className={`
         fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 pt-16 transition-transform duration-300
         lg:translate-x-0
