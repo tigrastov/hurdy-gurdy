@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { signOut } from 'firebase/auth';
-import { collection, addDoc, deleteDoc, doc, onSnapshot, query, where, getDocs } from 'firebase/firestore';
-import { auth, db } from '../firebase';
+//import { signOut } from 'firebase/auth';
+//import { collection, addDoc, deleteDoc, doc, onSnapshot, query, where, getDocs } from 'firebase/firestore';
+//import { auth, db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {

@@ -56,7 +56,7 @@ export const galleryAPI = {
   getAll: () => publicRequest('/gallery.php'),
 };
 
-// Защищённые методы (с авторизацией)
+// Админские методы
 export const kitchenAdminAPI = {
   add: (data) => authRequest('/kitchen/add.php', { method: 'POST', body: JSON.stringify(data) }),
   delete: (id) => authRequest('/kitchen/delete.php', { method: 'DELETE', body: JSON.stringify({ id }) }),
